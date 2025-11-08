@@ -1,0 +1,13 @@
+# Path to the root directory containing 'images' and 'labels' subdirectories
+path: D:\VScodefiles\DeepLearningProject\sonardataset_10k_3k_3k
+# Train, validation, test paths (relative to 'path')
+# This is unusual - typically, val/test are different subsets
+train: train/images  # Assumes images are in E:/sonardataset_10k_3k_3k/images
+val: val/images    # Using same set for validation (not ideal)
+test: test/images   # Using same set for testing (not ideal)
+
+# Number of classes
+nc: 2
+
+# Class names
+names: ['MILCO', 'NOMBO']

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mine Detection System</title>
+  <style>
+    /* ===== RESET ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0b1e3a, #03203C, #001a33);
+      color: #eaf6ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 25px;
+      color: #4fc3f7;
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(79, 195, 247, 0.6);
+      animation: fadeDown 1s ease-in-out;
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px 60px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeUp 1s ease-in-out;
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.35);
+    }
+
+    input[type=file] {
+      margin: 20px 0;
+      font-size: 16px;
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 10px;
+      border-radius: 10px;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    input[type=file]:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    button {
+      background: linear-gradient(90deg, #00bcd4, #2196f3);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #2196f3, #00bcd4);
+      box-shadow: 0 0 15px rgba(33, 150, 243, 0.7);
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 13px;
+      color: #8fc6ff;
+      opacity: 0.7;
+      letter-spacing: 0.5px;
+    }
+
+    footer span {
+      color: #4fc3f7;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Underwater Mine Detection System</h1>
+
+  <div class="box">
+    <form action="/predict" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept="image/*,video/*" required>
+      <br>
+      <button type="submit">Upload & Detect</button>
+    </form>
+  </div>
+
+  <footer>Developed by <span>Devansh, Shreyans, Dhruvil, Japit</span></footer>
+</body>
+</html>

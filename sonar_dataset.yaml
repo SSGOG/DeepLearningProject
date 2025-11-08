@@ -1,0 +1,15 @@
+# sonar_dataset.yaml
+
+# Path to the root directory containing 'images' and 'labels' subdirectories
+path: D:\VScodefiles\DeepLearningProject\Augmented 
+
+# Train, validation, test paths (relative to 'path')
+train: images  
+val: images   
+# test: test/images # Optional, if you have a separate test set
+
+# Number of classes
+nc: 2
+
+# Class names
+names: ['MILCO', 'NOMBO'] # Order must match the IDs: 0 -> MILCO, 1 -> NOMBO
