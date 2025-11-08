@@ -16,8 +16,14 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['RESULT_FOLDER'] = RESULT_FOLDER
 
 # Load YOLO model
-MODEL_PATH = r'D:\VScodefiles\DeepLearningProject\runs\detect\train\weights\best.pt'
-model = YOLO(MODEL_PATH)
+MODEL_PATH = 'best.pt'
+
+try:
+    model = YOLO(MODEL_PATH)
+    print("Model loaded successfully from:", MODEL_PATH)
+except Exception as e:
+    print(f"Error loading model: {e}")
+    model = None
 
 @app.route('/')
 def home():
