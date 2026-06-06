@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "provider": "python",
+  "packages": {
+    "python": "3.12"
+  },
+  "buildAptPackages": [
+    "libgl1",
+    "libglib2.0-0",
+    "libxcb1",
+    "libx11-6",
+    "libxext6",
+    "libxrender1"
+  ],
+  "steps": {
+    "install": {
+      "commands": [
+        "...",
+        "pip uninstall -y opencv-python || true"
+      ]
+    }
+  },
+  "deploy": {
+    "aptPackages": [
+      "libgl1",
+      "libglib2.0-0",
+      "libxcb1",
+      "libx11-6",
+      "libxext6",
+      "libxrender1"
+    ]
+  }
+}
