@@ -17,7 +17,13 @@ app.config['RESULT_FOLDER'] = RESULT_FOLDER
 
 # Load YOLO model
 MODEL_PATH = os.path.join(os.path.dirname(__file__), 'best_new.pt')
-model = YOLO(MODEL_PATH)
+
+try:
+    model = YOLO(MODEL_PATH)
+    print("Model loaded successfully from:", MODEL_PATH)
+except Exception as e:
+    print(f"Error loading model: {e}")
+    model = None
 
 @app.route('/')
 def home():
