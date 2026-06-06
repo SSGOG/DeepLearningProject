@@ -2,120 +2,405 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mine Detection System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ===== RESET ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0b1e3a, #03203C, #001a33);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%);
+      background-attachment: fixed;
       color: #eaf6ff;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated background particles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(79, 195, 247, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(100, 255, 218, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(33, 150, 243, 0.08) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 600px;
     }
 
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 25px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 10px;
       color: #4fc3f7;
-      letter-spacing: 1px;
-      text-shadow: 0 0 15px rgba(79, 195, 247, 0.6);
-      animation: fadeDown 1s ease-in-out;
+      letter-spacing: -0.5px;
+      text-shadow: 0 0 30px rgba(79, 195, 247, 0.5);
+      animation: fadeDown 0.8s ease-out;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #8fc6ff;
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      opacity: 0.8;
+      animation: fadeDown 0.8s ease-out 0.2s both;
+      font-weight: 300;
     }
 
     .box {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 40px 60px;
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      animation: fadeUp 1s ease-in-out;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-radius: 24px;
+      padding: 50px 40px;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 0 60px rgba(79, 195, 247, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeUp 0.8s ease-out 0.3s both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
     }
 
     .box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 40px rgba(0, 255, 255, 0.35);
+      transform: translateY(-8px);
+      box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+        0 0 80px rgba(79, 195, 247, 0.2);
+      border-color: rgba(79, 195, 247, 0.3);
+    }
+
+    .box:hover::before {
+      left: 100%;
+    }
+
+    .upload-area {
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      display: block;
     }
 
     input[type=file] {
-      margin: 20px 0;
-      font-size: 16px;
-      color: #fff;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 10px;
-      border-radius: 10px;
+      position: absolute;
+      opacity: 0;
       width: 100%;
+      height: 100%;
       cursor: pointer;
-      transition: background 0.3s ease;
+      z-index: 2;
     }
 
-    input[type=file]:hover {
-      background: rgba(255,255,255,0.2);
+    .file-input-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      border: 2px dashed rgba(79, 195, 247, 0.4);
+      border-radius: 16px;
+      background: rgba(79, 195, 247, 0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      min-height: 200px;
+    }
+
+    .file-input-label:hover {
+      border-color: rgba(79, 195, 247, 0.7);
+      background: rgba(79, 195, 247, 0.1);
+      transform: scale(1.02);
+    }
+
+    .file-input-label.dragover {
+      border-color: #4fc3f7;
+      background: rgba(79, 195, 247, 0.15);
+      transform: scale(1.02);
+    }
+
+    .upload-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      color: #4fc3f7;
+      opacity: 0.8;
+    }
+
+    .upload-text {
+      font-size: 18px;
+      font-weight: 500;
+      color: #eaf6ff;
+      margin-bottom: 8px;
+    }
+
+    .upload-hint {
+      font-size: 14px;
+      color: #8fc6ff;
+      opacity: 0.7;
+    }
+
+    .file-name {
+      margin-top: 16px;
+      padding: 12px 20px;
+      background: rgba(79, 195, 247, 0.1);
+      border-radius: 10px;
+      color: #4fc3f7;
+      font-size: 14px;
+      display: none;
+      word-break: break-all;
+    }
+
+    .file-name.show {
+      display: block;
+      animation: slideIn 0.3s ease-out;
     }
 
     button {
-      background: linear-gradient(90deg, #00bcd4, #2196f3);
+      background: linear-gradient(135deg, #00bcd4 0%, #2196f3 100%);
       color: #fff;
       border: none;
-      padding: 12px 28px;
-      border-radius: 10px;
+      padding: 16px 40px;
+      border-radius: 12px;
       font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
       letter-spacing: 0.5px;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
     }
 
     button:hover {
-      background: linear-gradient(90deg, #2196f3, #00bcd4);
-      box-shadow: 0 0 15px rgba(33, 150, 243, 0.7);
-      transform: scale(1.05);
+      background: linear-gradient(135deg, #2196f3 0%, #00bcd4 100%);
+      box-shadow: 0 6px 20px rgba(33, 150, 243, 0.5);
+      transform: translateY(-2px);
     }
 
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+    button:hover::before {
+      width: 300px;
+      height: 300px;
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .button-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .loading-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 10px;
+    }
+
+    button.loading .loading-spinner {
+      display: inline-block;
+    }
+
+    button.loading .button-text {
+      opacity: 0.8;
     }
 
     footer {
-      position: absolute;
-      bottom: 15px;
-      font-size: 13px;
+      position: fixed;
+      bottom: 20px;
+      font-size: 14px;
       color: #8fc6ff;
-      opacity: 0.7;
-      letter-spacing: 0.5px;
+      opacity: 0.6;
+      letter-spacing: 0.3px;
+      z-index: 1;
+      text-align: center;
+      width: 100%;
     }
 
     footer span {
       color: #4fc3f7;
       font-weight: 600;
     }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .box {
+        padding: 40px 30px;
+      }
+
+      .file-input-label {
+        padding: 40px 20px;
+        min-height: 160px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <h1>Underwater Mine Detection System</h1>
+  <div class="container">
+    <h1>🌊 Underwater Mine Detection System</h1>
+    <p class="subtitle">AI-Powered Detection for Marine Safety</p>
 
-  <div class="box">
-    <form action="/predict" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" accept="image/*,video/*" required>
-      <br>
-      <button type="submit">Upload & Detect</button>
-    </form>
+    <div class="box">
+      <form action="/predict" method="post" enctype="multipart/form-data" id="uploadForm">
+        <div class="upload-area">
+          <div class="file-input-wrapper">
+            <input type="file" name="file" id="fileInput" accept="image/*,video/*" required>
+            <label for="fileInput" class="file-input-label" id="fileLabel">
+              <div class="upload-icon">📤</div>
+              <div class="upload-text">Click to upload or drag and drop</div>
+              <div class="upload-hint">Supports images and videos</div>
+            </label>
+            <div class="file-name" id="fileName"></div>
+          </div>
+        </div>
+        <button type="submit" id="submitBtn">
+          <span class="loading-spinner"></span>
+          <span class="button-text">Upload & Detect</span>
+        </button>
+      </form>
+    </div>
   </div>
 
   <footer>Developed by <span>Devansh, Shreyans, Dhruvil, Japit</span></footer>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const fileLabel = document.getElementById('fileLabel');
+    const fileName = document.getElementById('fileName');
+    const uploadForm = document.getElementById('uploadForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // File input change
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        fileName.textContent = `Selected: ${file.name}`;
+        fileName.classList.add('show');
+        fileLabel.querySelector('.upload-text').textContent = 'File selected';
+      }
+    });
+
+    // Drag and drop
+    fileLabel.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      fileLabel.classList.add('dragover');
+    });
+
+    fileLabel.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      fileLabel.classList.remove('dragover');
+    });
+
+    fileLabel.addEventListener('drop', function(e) {
+      e.preventDefault();
+      fileLabel.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        fileInput.files = files;
+        fileName.textContent = `Selected: ${files[0].name}`;
+        fileName.classList.add('show');
+        fileLabel.querySelector('.upload-text').textContent = 'File selected';
+      }
+    });
+
+    // Form submission
+    uploadForm.addEventListener('submit', function() {
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      submitBtn.querySelector('.button-text').textContent = 'Processing...';
+    });
+  </script>
 </body>
 </html>

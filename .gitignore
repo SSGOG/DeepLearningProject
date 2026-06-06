@@ -1,0 +1,13 @@
+@"
+venv/
+__pycache__/
+*.pyc
+.env
+*.pem
+static/uploads/
+static/results/
+runs/
+*.zip
+sonardataset_10k_3k_3k/
+.cursor/
+"@ | Out-File -FilePath .gitignore -Encoding utf8

@@ -16,7 +16,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['RESULT_FOLDER'] = RESULT_FOLDER
 
 # Load YOLO model
-MODEL_PATH = r'D:\VScodefiles\DeepLearningProject\runs\detect\train\weights\best.pt'
+MODEL_PATH = os.path.join(os.path.dirname(__file__), 'best_new.pt')
 model = YOLO(MODEL_PATH)
 
 @app.route('/')
@@ -41,19 +41,20 @@ def predict():
     result_dir = os.path.join(app.config['RESULT_FOLDER'], result_name)
     print(f"YOLO saving results to directory: {result_dir}") # Debug print
 
+    abs_result_folder = os.path.abspath(app.config['RESULT_FOLDER'])
     results = model.predict(
         source=filepath,
         conf=0.25,
         save=True,
-        project=app.config['RESULT_FOLDER'], # Base project directory
-        name=result_name # Subdirectory name for results
+        project=abs_result_folder,
+        name=result_name
     )
+    result_dir = os.path.join(abs_result_folder, result_name)
 
     # --- Process Results ---
     predictions = []
     class_counts = {}
     alert_message = ""
-    # Default to original image path
     image_to_display_path = filepath
 
     if len(results) > 0:
@@ -157,4 +158,4 @@ def predict():
     )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
