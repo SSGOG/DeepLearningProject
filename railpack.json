@@ -16,7 +16,8 @@
     "install": {
       "commands": [
         "...",
-        "pip uninstall -y opencv-python || true"
+        "pip uninstall -y opencv-python || true",
+        "pip install --force-reinstall opencv-python-headless==4.12.0.88"
       ]
     }
   },
