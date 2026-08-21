@@ -1,4 +1,5 @@
 gradio
+onnx
 onnxruntime
 pillow
 numpy
