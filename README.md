@@ -3,7 +3,7 @@ title: Underwater Mine Detection
 emoji: 🌊
 colorFrom: blue
 colorTo: cyan
-sdk: docker
+sdk: gradio
 pinned: false
 ---
 
