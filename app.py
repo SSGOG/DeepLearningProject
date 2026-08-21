@@ -10,7 +10,10 @@ def predict(image):
     if image is None:
         return None, "No image provided.", ""
 
-    results = model.predict(source=image, conf=0.25, save=False)
+    # Resize to reduce memory usage on free tier
+    image.thumbnail((416, 416))
+
+    results = model.predict(source=image, conf=0.25, save=False, imgsz=416)
     r = results[0]
     boxes = r.boxes
 
