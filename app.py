@@ -38,7 +38,7 @@ def predict(image):
 
     return annotated, alert or "Detection complete.", details
 
-with gr.Blocks(title="Underwater Mine Detection", theme=gr.themes.Base()) as demo:
+with gr.Blocks(title="Underwater Mine Detection") as demo:
     gr.Markdown("# 🌊 Underwater Mine Detection System\nAI-Powered Detection for Marine Safety")
 
     with gr.Row():
@@ -56,4 +56,4 @@ with gr.Blocks(title="Underwater Mine Detection", theme=gr.themes.Base()) as dem
     gr.Markdown("Developed by **Devansh, Shreyans**")
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860)
+    demo.launch(server_name="0.0.0.0", server_port=7860, theme=gr.themes.Base())
