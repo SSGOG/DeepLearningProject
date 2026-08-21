@@ -2,7 +2,7 @@
 title: Underwater Mine Detection
 emoji: 🌊
 colorFrom: blue
-colorTo: cyan
+colorTo: blue
 sdk: gradio
 pinned: false
 ---
