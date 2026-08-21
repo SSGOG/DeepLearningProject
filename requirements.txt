@@ -1,6 +1,5 @@
 gradio
-torch
-torchvision
+onnxruntime
 pillow
 numpy
 ultralytics

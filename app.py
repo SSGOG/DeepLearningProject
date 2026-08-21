@@ -1,11 +1,10 @@
 import gradio as gr
 import os
 from PIL import Image
-import numpy as np
 from ultralytics import YOLO
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), 'best_new.pt')
-model = YOLO(MODEL_PATH)
+MODEL_PATH = os.path.join(os.path.dirname(__file__), 'best_new.onnx')
+model = YOLO(MODEL_PATH, task='detect')
 
 def predict(image):
     if image is None:
@@ -56,4 +55,5 @@ with gr.Blocks(title="Underwater Mine Detection") as demo:
     gr.Markdown("Developed by **Devansh, Shreyans**")
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860, theme=gr.themes.Base(), ssr_mode=False)
+    port = int(os.environ.get('PORT', 7860))
+    demo.launch(server_name="0.0.0.0", server_port=port, ssr_mode=False)
