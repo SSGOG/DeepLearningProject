@@ -1,13 +1,12 @@
-@"
 venv/
 __pycache__/
 *.pyc
 .env
 *.pem
-static/uploads/
-static/results/
+static/uploads/*
+static/results/*
 runs/
 *.zip
 sonardataset_10k_3k_3k/
 .cursor/
-"@ | Out-File -FilePath .gitignore -Encoding utf8
+yolo11s.pt
