@@ -172,6 +172,14 @@ if uploaded:
                 st.markdown('<div class="alert-clear">🔍 Detection complete.</div>', unsafe_allow_html=True)
 
             st.markdown('<div class="card-title">Detection Details</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <style>
+            [data-testid="stTable"] table { color: #eaf6ff; width: 100%; }
+            [data-testid="stTable"] th { color: #64ffda; background: rgba(100,255,218,0.1); font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; }
+            [data-testid="stTable"] td { color: #eaf6ff; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            [data-testid="stTable"] tr:hover td { background: rgba(100,255,218,0.05); }
+            </style>
+            """, unsafe_allow_html=True)
             st.table(rows)
 
             st.markdown('<div class="card-title">Detection Summary</div>', unsafe_allow_html=True)
