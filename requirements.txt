@@ -1,6 +1,6 @@
 streamlit
-onnx
-onnxruntime
+torch
+torchvision
 pillow
 numpy
 ultralytics

@@ -122,8 +122,8 @@ st.markdown("""
 
 @st.cache_resource
 def load_model():
-    path = os.path.join(os.path.dirname(__file__), 'best_new.onnx')
-    return YOLO(path, task='detect')
+    path = os.path.join(os.path.dirname(__file__), 'best_new.pt')
+    return YOLO(path)
 
 model = load_model()
 
